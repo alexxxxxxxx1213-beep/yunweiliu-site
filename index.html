@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Yunwei Liu — photojournalism and documentary photography. Chongqing, Hong Kong, New York, Tokyo.">
+<style>:root{color-scheme:dark;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Yunwei Liu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* Layout: black gallery after a photographer's archive site. Entry splash → work index under a giant
+   ghosted YUNWEI that folds into the corner mark on scroll → region pages with a crossfading slideshow.
+   Single dark look by choice. Content comes from data/site.json; #admin edits it. */
+:root{
+  --bg:#000; --fg:#fff; --dim:#8a8a8a; --ghost:#2b2b2b; --line:#262626; --panel:#0e0e0e; --warn:#e0b04a;
+  --f:"Helvetica Neue",Helvetica,Arial,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  --f-wide:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  color-scheme:dark;
+}
+:lang(ja){--f:"Helvetica Neue",Helvetica,Arial,"Hiragino Sans","Noto Sans JP",sans-serif}
+
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font:400 15px/1.6 var(--f);-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:1px solid var(--fg);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto}
+.wide{font-family:var(--f-wide);font-stretch:125%;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(0,0,0,var(--hb,1))}
+.top .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px 16px;padding-block:22px}
+.top nav{grid-column:2;display:flex;flex-wrap:wrap;gap:4px 18px;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+.top nav a{text-decoration:none}
+.top nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:3px}
+.top .right{grid-column:3;display:flex;justify-content:flex-end;align-items:center;gap:14px}
+.ig{display:inline-flex;width:15px;height:15px}
+.lang{display:flex;gap:8px;font-size:12px}
+.lang button{all:unset;cursor:pointer;color:var(--dim)}
+.lang button[aria-pressed="true"]{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
+.lang button:focus-visible{outline:1px solid var(--fg)}
+@media (max-width:640px){.top .wrap{grid-template-columns:1fr auto}.top .right{grid-column:2}.top nav{grid-column:1/-1;grid-row:2}}
+
+/* brand: big YUNWEI that folds into the corner mark */
+#brand{position:fixed;left:0;top:0;z-index:8;transform-origin:0 0;white-space:nowrap;text-decoration:none;
+  font-size:var(--big,18vw);line-height:1;color:var(--ghost);will-change:transform}
+#brand.front{z-index:30}
+#brand .b2{opacity:0}
+#brand[hidden]{display:none}
+.ghost-space{height:calc(var(--big,18vw) * .9 + 24px)}
+
+/* images */
+.ph{display:block;width:100%;aspect-ratio:3/2;background:radial-gradient(120% 90% at 30% 30%,#1d1d1d,#0b0b0b)}
+img.photo{display:block;width:100%;height:auto;max-width:100%}
+
+/* entry splash */
+#v-enter{position:relative;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
+#v-enter .hero{position:relative;height:min(82vh,860px);min-height:380px;overflow:hidden;background:#050505}
+#v-enter .hero img,#v-enter .hero .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;aspect-ratio:auto}
+#v-enter .enter{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:18px;font-size:14px;text-decoration:underline;text-underline-offset:3px;text-shadow:0 0 12px #000}
+
+/* work index */
+.lead{width:min(340px,64%);margin:calc(var(--big,18vw) * -.4) auto 0;position:relative;z-index:10}
+.idx{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding-block:20px 120px}
+.idx .item{grid-column:span 5;min-width:0;margin-top:clamp(70px,11vw,150px)}
+.idx .item:nth-child(odd){grid-column:1/6}
+.idx .item:nth-child(even){grid-column:8/13;margin-top:calc(clamp(70px,11vw,150px) + 12vw)}
+.idx .item a{text-decoration:none;display:block}
+.idx .cover{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:#0b0b0b}
+.idx .item .t{display:inline-block;margin-top:12px;font-weight:700;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.idx .item a:hover .t{color:var(--dim)}
+@media (max-width:620px){.idx .item:nth-child(odd),.idx .item:nth-child(even){grid-column:1/-1;margin-top:64px}}
+
+/* region page */
+.series h1{font-weight:700;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.01em;margin:22px 0 4px}
+.series .meta{color:var(--dim);font-size:13px;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.slide{position:relative;max-width:880px;margin:0 auto}
+.stage{position:relative;height:min(58vh,54vw);touch-action:pan-y;user-select:none}
+.stage{overflow:hidden;cursor:zoom-in}
+#zoom{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(14px) brightness(.55);backdrop-filter:blur(14px) brightness(.55);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;transition:opacity .35s ease;
+  padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+#zoom.open{opacity:1}
+#zstage{position:relative;width:min(100%,1500px);height:calc(100% - 70px);overflow:hidden;cursor:zoom-out}
+#zstage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.97);transition:opacity .7s ease,transform .8s cubic-bezier(.22,.7,.2,1)}
+#zstage img.on{opacity:1}
+#zoom.open #zstage img.on{transform:none}
+#zbar{display:flex;align-items:center;gap:28px;font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
+#zbar button{all:unset;cursor:pointer;font-size:26px;line-height:1;padding:4px 12px;color:var(--dim)}
+#zbar button:hover{color:var(--fg)}
+#zbar button:focus-visible,#zclose:focus-visible{outline:1px solid var(--fg)}
+#zclose{all:unset;position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));font-size:30px;line-height:1;padding:6px 10px;cursor:pointer;color:var(--dim)}
+#zclose:hover{color:var(--fg)}
+@media (prefers-reduced-motion:reduce){#zstage img,#zoom{transition:none}}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .7s ease,transform .8s cubic-bezier(.22,.7,.2,1)}
+.stage img.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.stage img{transition:none}}
+.slide .nav{all:unset;position:absolute;top:calc(min(58vh,54vw) / 2 - 30px);cursor:pointer;padding:18px;font-size:24px;color:var(--dim);z-index:2}
+.slide .nav:hover{color:var(--fg)}
+.slide .nav:focus-visible{outline:1px solid var(--fg)}
+.slide .prev{left:-58px}.slide .next{right:-58px}
+@media (max-width:1220px){.slide .prev{left:-12px}.slide .next{right:-12px}}
+.slide .cnt{text-align:center;color:var(--dim);font-size:12px;margin-top:12px;font-variant-numeric:tabular-nums}
+.thumbs{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:28px auto 0;max-width:1080px}
+.thumbs button{all:unset;cursor:pointer;width:64px;height:44px;opacity:.4;overflow:hidden;transition:opacity .3s}
+.thumbs button[aria-current="true"],.thumbs button:hover{opacity:1}
+.thumbs button:focus-visible{outline:1px solid var(--fg)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.back{display:inline-block;margin-top:48px;font-size:12px;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(24px,6vw,90px);padding-block:40px 70px}
+.about figure{margin:0;max-width:340px;justify-self:end;width:100%}
+.about .bio{max-width:34em;font-size:14px}
+.about .bio p{margin:0 0 14px}
+@media (max-width:760px){.about{grid-template-columns:1fr}.about figure{justify-self:start}}
+details{border-top:1px solid var(--line)}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding-block:18px;font-size:clamp(16px,1.9vw,22px)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f);font-weight:300;font-size:26px;line-height:1}
+details[open] summary::after{content:"−"}
+.acc{padding-bottom:26px;display:grid;gap:14px;max-width:760px}
+.row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:16px;font-size:14px}
+.row .y{color:var(--dim);font-variant-numeric:tabular-nums}
+.row b{font-weight:500}
+.row ul{margin:6px 0 0;padding-left:1.1em;color:var(--dim)}
+@media (max-width:520px){.row{grid-template-columns:1fr;gap:2px}}
+
+/* contact */
+.contact{padding-block:60px 120px;display:grid;gap:44px;max-width:760px}
+.contact .k{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.contact .v{font-size:clamp(18px,3.4vw,34px);font-weight:700;letter-spacing:-.015em;word-break:break-all;user-select:all}
+.contact .v a{text-decoration:none}
+.contact button{all:unset;cursor:pointer;font-size:12px;text-decoration:underline;text-underline-offset:3px;color:var(--dim);margin-top:8px}
+.todo{color:var(--dim);font-weight:400}
+
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:20px}
+footer .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding-block:44px 56px;font-size:12px}
+footer .fm{font-size:20px;line-height:1;text-align:center}
+footer .r{display:flex;justify-content:flex-end;gap:16px;align-items:center}
+footer .c{color:var(--dim)}
+footer .adm{color:var(--dim);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:520px){footer .wrap{grid-template-columns:1fr;justify-items:center;text-align:center}footer .r{justify-content:center}}
+
+/* admin */
+.admin{padding-block:30px 140px;display:grid;gap:28px}
+.admin h1{font-size:26px;margin:0}
+.admin .hint{color:var(--dim);font-size:13px;max-width:60em;margin:6px 0 0}
+.panel{background:var(--panel);border:1px solid var(--line);padding:18px;display:grid;gap:14px}
+.panel .hd{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.panel .hd .nm{font-weight:700;font-size:18px;margin-right:auto}
+.btn{all:unset;cursor:pointer;border:1px solid #444;padding:5px 11px;font-size:12px;white-space:nowrap}
+.btn:hover{border-color:var(--fg)}
+.btn:focus-visible{outline:1px solid var(--fg)}
+.btn.pri{background:var(--fg);color:#000;border-color:var(--fg)}
+.btn.danger{color:#ff8a7a;border-color:#5a2a24}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.fields{display:flex;flex-wrap:wrap;gap:10px}
+.fields label{display:grid;gap:3px;font-size:11px;color:var(--dim);min-width:0}
+.fields input{background:#000;border:1px solid #333;padding:6px 8px;width:160px;max-width:100%}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.pc{display:grid;gap:5px;min-width:0}
+.pc .im{position:relative;aspect-ratio:3/2;background:#111;overflow:hidden}
+.pc .im img{width:100%;height:100%;object-fit:cover;display:block}
+.pc .badge{position:absolute;left:4px;top:4px;background:var(--fg);color:#000;font-size:10px;padding:0 4px}
+.pc .ctl{display:flex;gap:4px}
+.pc .ctl button{all:unset;cursor:pointer;border:1px solid #333;font-size:12px;padding:0 6px;line-height:20px}
+.pc .ctl button:hover{border-color:var(--fg)}
+.pc select{background:#000;border:1px solid #333;font-size:11px;padding:2px;flex:1;min-width:0}
+.drop{border:1px dashed #444;padding:16px;text-align:center;color:var(--dim);font-size:13px;cursor:pointer}
+.drop.over{border-color:var(--fg);color:var(--fg)}
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:35;background:#111;border-top:1px solid #333;
+  padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.savebar .msg{font-size:13px;color:var(--dim)}
+.savebar .msg.warn{color:var(--warn)}
+.note{color:var(--dim);font-size:13px}
+
+.view[hidden]{display:none}
+</style>
+
+</head>
+<body>
+<a id="brand" class="wide" href="#work" aria-label="Yunwei Liu"><span class="b1">Yunwei</span><span class="b2">&nbsp;Liu</span></a>
+
+<header class="top" id="hdr">
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a href="#work" data-nav="work" data-i="nav_work"></a>
+      <a href="#about" data-nav="about" data-i="nav_about"></a>
+      <a href="#contact" data-nav="contact" data-i="nav_contact"></a>
+    </nav>
+    <div class="right">
+      <a class="ig" id="ig-top" href="#contact" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <div class="lang" role="group" aria-label="Language">
+        <button id="l-zh" data-l="zh">中</button><button id="l-en" data-l="en">EN</button><button id="l-ja" data-l="ja">日</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view" id="v-enter">
+    <div class="hero" id="enter-hero"></div>
+    <a class="enter" href="#work" data-i="enter"></a>
+  </section>
+
+  <section class="view" id="v-work" hidden>
+    <div class="ghost-space" aria-hidden="true"></div>
+    <div class="lead" id="lead"></div>
+    <div class="idx" id="idx"></div>
+  </section>
+
+  <section class="view series" id="v-series" hidden>
+    <h1 id="s-title"></h1>
+    <div class="meta" id="s-meta"></div>
+    <div class="slide">
+      <div class="stage" id="stage" tabindex="0" role="button" aria-label="Enlarge"><img id="la" alt=""><img id="lb" alt=""></div>
+      <button class="nav prev" type="button" aria-label="Previous" id="prev">‹</button>
+      <button class="nav next" type="button" aria-label="Next" id="next">›</button>
+      <div class="cnt" id="cnt"></div>
+    </div>
+    <div class="thumbs" id="thumbs"></div>
+    <a class="back" href="#work" data-i="back"></a>
+  </section>
+
+  <section class="view" id="v-about" hidden>
+    <div class="about">
+      <figure id="portrait"></figure>
+      <div class="bio"><p data-i="bio1"></p><p data-i="bio2"></p></div>
+    </div>
+    <div id="acc"></div>
+  </section>
+
+  <section class="view" id="v-contact" hidden>
+    <div class="contact">
+      <div><div class="k" data-i="email"></div><div class="v" id="v-email"></div><button type="button" id="cp-email" data-i="copy"></button></div>
+      <div><div class="k">Instagram</div><div class="v" id="v-ig"></div><button type="button" id="cp-ig" data-i="copy"></button></div>
+    </div>
+  </section>
+
+  <section class="view admin" id="v-admin" hidden>
+    <div>
+      <h1>作品後台</h1>
+      <p class="hint">在這裡新增、刪除和排序照片，管理地區。改動會先暫存，按下方「發布更改」後才會更新到網站上。上傳的照片會自動縮小到長邊 2000 像素。</p>
+    </div>
+    <div id="adm-body"><p class="note">正在檢查權限…</p></div>
+  </section>
+</main>
+
+<div id="zoom" hidden role="dialog" aria-modal="true" aria-label="Photo">
+  <div id="zstage"><img id="za" alt=""><img id="zb" alt=""></div>
+  <div id="zbar"><button type="button" id="zprev" aria-label="Previous">‹</button><span id="zcnt"></span><button type="button" id="znext" aria-label="Next">›</button></div>
+  <button type="button" id="zclose" aria-label="Close">×</button>
+</div>
+
+<div class="savebar" id="savebar" hidden>
+  <span class="msg" id="save-msg"></span>
+  <div style="display:flex;gap:10px">
+    <button class="btn" type="button" id="discard">放棄更改</button>
+    <button class="btn pri" type="button" id="publish">發布更改</button>
+  </div>
+</div>
+
+<footer id="ftr">
+  <div class="wrap">
+    <div class="c">© 2026 Yunwei Liu</div>
+    <div class="fm wide">Yunwei<br>Liu</div>
+    <div class="r"><a class="adm" id="adm-link" href="#admin" hidden>後台</a><a class="ig" id="ig-foot" href="#contact" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
+  </div>
+</footer>
+
+<script>
+const CONTACT = { email:"Alexxxxxxxx1213@gmail.com", instagram:"yunweilliu" };   // instagram handle without @
+
+const T = {
+ nav_work:{zh:"作品",en:"Work",ja:"作品"},
+ nav_about:{zh:"關於",en:"About",ja:"プロフィール"},
+ nav_contact:{zh:"聯絡",en:"Contact",ja:"連絡先"},
+ enter:{zh:"進入 >",en:"Enter >",ja:"入る >"},
+ photos:{zh:"張",en:"photographs",ja:"枚"},
+ bio1:{
+  zh:"Yunwei Liu，倫敦傳媒學院（倫敦藝術大學）新聞攝影與紀實攝影專業在讀。",
+  en:"Yunwei Liu studies Photojournalism and Documentary Photography at London College of Communication, University of the Arts London.",
+  ja:"Yunwei Liu。ロンドン芸術大学ロンドン・カレッジ・オブ・コミュニケーションにて報道写真とドキュメンタリー写真を専攻。"},
+ bio2:{
+  zh:"自 2022 年起在新華社音視頻部兼職，參與新聞採集、編輯製作與多媒體內容。關注新聞、時事與紀實敘事。",
+  en:"Part-time editorial contributor at Xinhua News Agency's Audiovisual Department since 2022, working on news gathering, editorial production and multimedia content. Interested in journalism, current affairs and documentary storytelling.",
+  ja:"2022年より新華社オーディオビジュアル部で非常勤として、ニュース取材、編集制作、マルチメディアコンテンツに携わる。関心はジャーナリズム、時事、ドキュメンタリーの語り。"},
+ a_edu:{zh:"教育",en:"Education",ja:"学歴"},
+ a_exp:{zh:"經歷",en:"Experience",ja:"職歴"},
+ a_lang:{zh:"語言",en:"Languages",ja:"言語"},
+ email:{zh:"郵箱",en:"Email",ja:"メール"},
+ copy:{zh:"複製",en:"Copy",ja:"コピー"},
+ copied:{zh:"已複製",en:"Copied",ja:"コピーしました"},
+ todo:{zh:"待填",en:"To be added",ja:"未記入"},
+ back:{zh:"← 返回作品",en:"← Back to work",ja:"← 作品へ戻る"},
+};
+
+const ACC = [
+ {k:"a_edu", rows:[{y:"2026 —", b:{zh:"倫敦傳媒學院，倫敦藝術大學",en:"London College of Communication, UAL",ja:"ロンドン・カレッジ・オブ・コミュニケーション（UAL）"},
+   s:{zh:"新聞攝影與紀實攝影",en:"Photojournalism and Documentary Photography",ja:"報道写真とドキュメンタリー写真"}}]},
+ {k:"a_exp", rows:[{y:"2022.03 —", b:{zh:"新華社 音視頻部 · 兼職編輯",en:"Xinhua News Agency, Audiovisual Dept. · Part-time Editorial Contributor",ja:"新華社 オーディオビジュアル部 · 非常勤編集"},
+   li:[{zh:"採訪與資料搜集",en:"Interviews and information gathering",ja:"取材と情報収集"},
+       {zh:"新聞寫作與編輯",en:"News writing and editing",ja:"記事の執筆と編集"},
+       {zh:"新聞影像拍攝與錄製",en:"Filming and recording for news projects",ja:"ニュース映像の撮影・収録"},
+       {zh:"社交媒體內容發佈",en:"Social media publishing",ja:"SNS向けコンテンツの公開"}]}]},
+ {k:"a_lang", rows:[
+   {y:{zh:"中文",en:"Chinese",ja:"中国語"}, b:{zh:"母語",en:"Native",ja:"母語"}},
+   {y:{zh:"英文",en:"English",ja:"英語"}, b:{zh:"學習與工作語言",en:"Study and work",ja:"学業・業務レベル"}},
+   {y:{zh:"日文",en:"Japanese",ja:"日本語"}, b:{zh:"基礎",en:"Basic",ja:"基礎"}}]},
+];
+
+/* ---------- state ---------- */
+let SITE = {enter:null,lead:null,portrait:null,series:[]};
+let L="zh", view="enter", cur=null, idx=0;
+const BLOB = {};                       // path -> object URL for photos added in this session
+const u = p => p ? (BLOB[p] || p) : "";
+/* Static hosting (own domain): data may hold plain image paths from the CMS; thumbnails come from Netlify's image CDN. */
+const STATIC = !window.claude;
+const ON_NETLIFY = STATIC && location.hostname !== "localhost" && !location.protocol.startsWith("file");
+const cdn = (p,w) => ON_NETLIFY && p && !/^(blob:|data:|https?:)/.test(p) ? `/.netlify/images?url=${encodeURIComponent(p.startsWith("/")?p:"/"+p)}&w=${w}&q=78` : p;
+function normalize(d){
+  const one = x => !x ? null : (typeof x==="string" ? {src:x} : x);
+  const out = {enter:one(d.enter), lead:one(d.lead), portrait:one(d.portrait), series:[]};
+  (d.series||[]).forEach(s=>{
+    const imgs=(s.imgs||[]).map(one).filter(m=>m&&m.src).map(m=>({...m, t: m.t || cdn(m.src,320)}));
+    out.series.push({slug:String(s.slug||"").trim()||("r"+out.series.length), t:s.t||{}, cover:(typeof s.cover==="object"&&s.cover?s.cover.src:s.cover)||"", imgs});
+  });
+  return out;
+}
+const tx=o=>typeof o==="string"?o:((o&&(o[L]??o.zh))||"");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+function pic(item,alt,cls="photo"){
+  if(item&&item.src) return `<img class="${cls}" src="${esc(u(item.src))}" alt="${esc(alt||"")}" loading="lazy">`;
+  return `<span class="ph"></span>`;
+}
+
+/* ---------- static render ---------- */
+function renderStatic(){
+  document.documentElement.lang = L==="zh"?"zh-Hant":L;
+  document.querySelectorAll("[data-i]").forEach(el=>el.textContent=tx(T[el.dataset.i]));
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===L));
+
+  $("enter-hero").innerHTML = SITE.enter ? `<img src="${esc(u(SITE.enter.src))}" alt="Yunwei Liu">` : "";
+  const first = SITE.series[0];
+  $("lead").innerHTML = SITE.lead ? `<a href="#${first?first.slug:"work"}">${pic(SITE.lead,"Yunwei Liu")}</a>` : "";
+  $("portrait").innerHTML = SITE.portrait ? pic(SITE.portrait,"Yunwei Liu") : "";
+
+  $("idx").innerHTML = SITE.series.map(s=>{
+    const c = s.cover || (s.imgs[0]&&s.imgs[0].src) || "";
+    return `<div class="item"><a href="#${esc(s.slug)}">${c?`<img class="cover" src="${esc(u(c))}" alt="${esc(tx(s.t))}" loading="lazy">`:`<span class="ph"></span>`}<span class="t">${esc(tx(s.t))}</span></a></div>`;
+  }).join("");
+
+  $("acc").innerHTML = ACC.map((a,i)=>`<details${i===0?" open":""}><summary class="wide">${tx(T[a.k])}</summary><div class="acc">${
+    a.rows.map(r=>`<div class="row"><span class="y">${tx(r.y)}</span><div><b>${tx(r.b)}</b>${r.s?`<div style="color:var(--dim)">${tx(r.s)}</div>`:""}${r.li?`<ul>${r.li.map(x=>`<li>${tx(x)}</li>`).join("")}</ul>`:""}</div></div>`).join("")
+  }</div></details>`).join("");
+
+  const ig = CONTACT.instagram;
+  $("v-email").innerHTML = CONTACT.email?`<a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a>`:`<span class="todo">${tx(T.todo)}</span>`;
+  $("v-ig").innerHTML = ig?`<a href="https://www.instagram.com/${esc(ig)}/" target="_blank" rel="noopener">@${esc(ig)}</a>`:`<span class="todo">${tx(T.todo)}</span>`;
+  $("cp-email").hidden=!CONTACT.email; $("cp-ig").hidden=!ig;
+  ["ig-top","ig-foot"].forEach(id=>{const a=$(id); if(ig){a.href=`https://www.instagram.com/${ig}/`;a.target="_blank";a.rel="noopener";}});
+  if(view==="series"&&cur) openSeries(cur,idx,true);
+}
+
+/* ---------- region slideshow with crossfade ---------- */
+function makeSlider(stageId,aId,bId){
+  const st={front:aId,token:0};
+  st.reset=()=>{ [aId,bId].forEach(id=>{const e=$(id); e.className=""; e.style.transform=""; e.removeAttribute("src");}); };
+  st.set=(src,alt,dir)=>{
+    const my=++st.token, back=st.front===aId?bId:aId, nb=$(back), nf=$(st.front);
+    const SH=Math.min(90,$(stageId).clientWidth*.08);
+    nb.alt=alt;
+    const swap=()=>{ if(my!==st.token) return;
+      nb.style.transition="none"; nb.style.transform=`translateX(${dir*SH}px)`; void nb.offsetWidth; nb.style.transition="";
+      nb.style.transform="translateX(0)"; nb.classList.add("on");
+      nf.style.transform=`translateX(${-dir*SH}px)`; nf.classList.remove("on"); st.front=back; };
+    nb.onload=null; nb.src=src;
+    if(nb.complete && nb.naturalWidth) swap(); else { nb.onload=swap; nb.onerror=swap; }
+  };
+  return st;
+}
+const zoom=$("zoom");
+const mainS=makeSlider("stage","la","lb"), zoomS=makeSlider("zstage","za","zb");
+function openSeries(s,start=0,keep=false){
+  cur=s; idx=clamp(start,0,Math.max(0,s.imgs.length-1));
+  $("s-title").textContent=tx(s.t);
+  $("s-meta").textContent=`${s.imgs.length} ${tx(T.photos)}`;
+  $("thumbs").innerHTML=s.imgs.map((m,i)=>`<button type="button" data-t="${i}" aria-label="${i+1}"><img src="${esc(u(m.t||m.src))}" data-f="${esc(u(m.src))}" onerror="this.onerror=null;this.src=this.dataset.f" alt="" loading="lazy"></button>`).join("");
+  $("thumbs").querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>show(+b.dataset.t));
+  if(!keep) mainS.reset();
+  show(idx,true);
+}
+function show(i,instant){
+  if(!cur||!cur.imgs.length){ $("cnt").textContent=""; return; }
+  const dir = instant ? 0 : (Math.sign(i-idx)||1);
+  idx=(i+cur.imgs.length)%cur.imgs.length;
+  const m=cur.imgs[idx], alt=`${tx(cur.t)} ${idx+1}`, label=`${idx+1} / ${cur.imgs.length}`;
+  $("cnt").textContent=label; $("zcnt").textContent=label;
+  $("thumbs").querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-current",+b.dataset.t===idx));
+  mainS.set(u(m.src),alt,dir);
+  if(!zoom.hidden) zoomS.set(u(m.src),alt,dir);
+  [1,-1].forEach(d=>{const n=cur.imgs[(idx+d+cur.imgs.length)%cur.imgs.length]; if(n){const p=new Image(); p.src=u(n.src);} });
+}
+$("prev").onclick=()=>show(idx-1); $("next").onclick=()=>show(idx+1);
+(()=>{let x0=null;const st=$("stage");
+  st.addEventListener("pointerdown",e=>{x0=e.clientX});
+  st.addEventListener("pointerup",e=>{ if(x0===null) return; const dx=e.clientX-x0; x0=null;
+    if(e.pointerType!=="mouse" && Math.abs(dx)>40) show(idx+(dx<0?1:-1)); else if(Math.abs(dx)<10) openZoom(); });
+  st.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openZoom(); } });
+})();
+function openZoom(){
+  if(!cur||!cur.imgs.length) return;
+  zoomS.reset(); zoom.hidden=false; document.documentElement.style.overflow="hidden";
+  zoomS.set(u(cur.imgs[idx].src),`${tx(cur.t)} ${idx+1}`,0);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>zoom.classList.add("open"))); $("zclose").focus();
+}
+function closeZoom(){
+  if(zoom.hidden) return;
+  zoom.classList.remove("open"); document.documentElement.style.overflow="";
+  setTimeout(()=>{ if(!zoom.classList.contains("open")) zoom.hidden=true; },350); $("stage").focus({preventScroll:true});
+}
+zoom.addEventListener("click",e=>{ if(e.target===zoom||e.target.closest("#zstage")||e.target.closest("#zclose")) closeZoom(); });
+$("zprev").onclick=e=>{e.stopPropagation(); show(idx-1);};
+$("znext").onclick=e=>{e.stopPropagation(); show(idx+1);};
+(()=>{let x0=null;const zs=$("zstage");
+  zs.addEventListener("pointerdown",e=>{x0=e.clientX});
+  zs.addEventListener("pointerup",e=>{ if(x0===null) return; const dx=e.clientX-x0; x0=null;
+    if(e.pointerType!=="mouse" && Math.abs(dx)>40){ e.stopPropagation(); swiped=true; show(idx+(dx<0?1:-1)); } });
+})();
+let swiped=false;
+zoom.addEventListener("click",e=>{ if(swiped){ swiped=false; e.stopImmediatePropagation(); } },true);
+
+/* ---------- brand fold-on-scroll ---------- */
+const brand=$("brand"), b2=brand.querySelector(".b2"), b1=brand.querySelector(".b1"), hdr=$("hdr");
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+let rafOn=false, sizedFor=0, ratio=0;
+function placeBrand(){
+  rafOn=false;
+  if(view==="enter"||view==="admin"){ brand.hidden=true; return; }
+  brand.hidden=false;
+  const vw=document.documentElement.clientWidth, hH=hdr.offsetHeight, top0=hdr.getBoundingClientRect().top;
+  if(sizedFor!==vw || !ratio){
+    brand.style.fontSize="100px"; ratio=b1.offsetWidth/100;
+    const padL=parseFloat(getComputedStyle(document.body).paddingLeft)||16;
+    const avail=Math.min(vw-2*padL,1240);
+    const bigPx=Math.min(ratio?avail/ratio:vw*.18, 320);
+    brand.style.fontSize=bigPx+"px"; document.documentElement.style.setProperty("--big",bigPx+"px"); sizedFor=vw;
+  }
+  const big=parseFloat(brand.style.fontSize);
+  const endSize = vw<640?16:19, s1=endSize/big;
+  const w1=b1.offsetWidth;
+  const leftEnd=Math.max(parseFloat(getComputedStyle(document.body).paddingLeft)||16,(vw-1240)/2);
+  const firstRow = vw<640 ? 22+8 : hH/2;
+  const yEnd=top0 + firstRow - endSize*.5;
+  const p = view==="work" ? clamp(window.scrollY/Math.max(160,big*1.1),0,1) : 1;
+  const e=ease(p);
+  const x=(vw-w1)/2*(1-e)+leftEnd*e;
+  const y=(top0+hH+18)*(1-e)+yEnd*e;
+  const s=1+(s1-1)*e;
+  brand.style.transform=`translate(${x}px,${y}px) scale(${s})`;
+  const g=Math.round(43+(255-43)*e); brand.style.color=`rgb(${g},${g},${g})`;
+  b2.style.opacity=clamp((p-.55)/.45,0,1);
+  const fold=p>=.5;
+  brand.classList.toggle("front",fold);
+  hdr.style.setProperty("--hb", view==="work" ? (fold?1:0) : 1);
+}
+const reqBrand=()=>{ if(!rafOn){ rafOn=true; requestAnimationFrame(placeBrand); } };
+addEventListener("scroll",reqBrand,{passive:true});
+addEventListener("resize",reqBrand);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ratio=0;reqBrand();});
+
+/* ---------- routing ---------- */
+function route(){
+  const h=(location.hash||"").replace("#","");
+  if(h==="admin" && STATIC){ location.href="admin/"; return; }
+  const s=SITE.series.find(x=>x.slug===h);
+  view = s?"series":(["work","about","contact","admin"].includes(h)?h:"enter");
+  document.querySelectorAll(".view").forEach(v=>v.hidden=true);
+  $("v-"+view).hidden=false;
+  const splash=view==="enter";
+  hdr.hidden=splash; $("ftr").hidden=splash;
+  document.querySelectorAll("[data-nav]").forEach(a=>a.setAttribute("aria-current",(a.dataset.nav===view||(view==="series"&&a.dataset.nav==="work"))?"page":"false"));
+  closeZoom();
+  if(s) openSeries(s,0);
+  if(view==="admin") renderAdmin();
+  $("savebar").hidden = !(view==="admin" && dirty);
+  window.scrollTo(0,0);
+  placeBrand();
+}
+
+function setLang(l){L=l;try{localStorage.setItem("yl-lang",l)}catch(e){} renderStatic(); placeBrand();}
+document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.l)));
+document.addEventListener("keydown",e=>{
+  if(!zoom.hidden){ if(e.key==="Escape") closeZoom();
+    if(e.key==="ArrowLeft"||e.key==="ArrowRight") show(idx+(e.key==="ArrowLeft"?-1:1)); return; }
+  if(view!=="series") return; if(e.key==="ArrowLeft") show(idx-1); if(e.key==="ArrowRight") show(idx+1); });
+addEventListener("hashchange",route);
+
+function copy(btn,text,valEl){
+  const done=()=>{btn.textContent=tx(T.copied);setTimeout(()=>btn.textContent=tx(T.copy),1600)};
+  const fb=()=>{const r=document.createRange();r.selectNodeContents(valEl);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+  try{navigator.clipboard.writeText(text).then(done,fb)}catch(e){fb()}
+}
+$("cp-email").addEventListener("click",e=>copy(e.currentTarget,CONTACT.email,$("v-email")));
+$("cp-ig").addEventListener("click",e=>copy(e.currentTarget,"@"+CONTACT.instagram,$("v-ig")));
+
+/* ================= ADMIN ================= */
+let canEdit=false, artifactNS=null, dirty=false, draft=null, saving=false;
+const NEWFILES={};          // path -> Blob, added this session, not yet published
+let removed=new Set();       // paths no longer referenced (deleted on publish)
+let armed=null;              // two-step delete confirmation key
+
+const clone=o=>JSON.parse(JSON.stringify(o));
+function markDirty(){ dirty=true; $("savebar").hidden=false; $("save-msg").className="msg"; $("save-msg").textContent="有未發布的更改"; }
+function allRefs(site){ const s=new Set(); ["enter","lead","portrait"].forEach(k=>{if(site[k]){s.add(site[k].src);s.add(site[k].t)}});
+  site.series.forEach(x=>{ if(x.cover) s.add(x.cover); x.imgs.forEach(m=>{s.add(m.src);s.add(m.t)}); }); s.delete(undefined); return s; }
+
+function renderAdmin(){
+  const body=$("adm-body");
+  if(!canEdit){ body.innerHTML=`<p class="note">只有網站的編輯者可以使用後台。請用你自己的帳號打開這個頁面。</p>`; return; }
+  if(!draft) draft=clone(SITE);
+  const D=draft;
+  const isSel=(k,src)=>D[k]&&D[k].src===src;
+  body.innerHTML = D.series.map((s,si)=>`
+    <div class="panel" data-si="${si}">
+      <div class="hd">
+        <span class="nm">${esc(s.t.zh||s.slug)} <span class="note">· ${s.imgs.length} 張</span></span>
+        <button class="btn" data-a="sup" ${si===0?"disabled":""}>上移</button>
+        <button class="btn" data-a="sdown" ${si===D.series.length-1?"disabled":""}>下移</button>
+        <button class="btn danger" data-a="sdel">${armed==="s"+si?"再按一次確認刪除":"刪除地區"}</button>
+      </div>
+      <div class="fields">
+        <label>中文名<input data-f="zh" value="${esc(s.t.zh)}" id="f-${si}-zh"></label>
+        <label>English<input data-f="en" value="${esc(s.t.en)}" id="f-${si}-en"></label>
+        <label>日本語<input data-f="ja" value="${esc(s.t.ja)}" id="f-${si}-ja"></label>
+      </div>
+      <div class="pgrid">${s.imgs.map((m,pi)=>`
+        <div class="pc" data-pi="${pi}">
+          <div class="im"><img src="${esc(u(m.t||m.src))}" alt="">${s.cover===m.src?`<span class="badge">封面</span>`:""}${isSel("enter",m.src)?`<span class="badge" style="top:auto;bottom:4px">入口</span>`:""}${isSel("lead",m.src)?`<span class="badge" style="left:auto;right:4px">主圖</span>`:""}</div>
+          <div class="ctl">
+            <button data-a="pl" aria-label="往前" ${pi===0?"disabled":""}>←</button>
+            <button data-a="pr" aria-label="往後" ${pi===s.imgs.length-1?"disabled":""}>→</button>
+            <select data-a="pm" aria-label="更多操作" id="pm-${si}-${pi}">
+              <option value="">更多…</option>
+              <option value="cover">設為封面</option>
+              <option value="enter">設為入口大圖</option>
+              <option value="lead">設為作品頁主圖</option>
+              <option value="portrait">設為關於頁照片</option>
+              ${D.series.length>1?`<optgroup label="移到地區">${D.series.map((o,oi)=>oi===si?"":`<option value="mv${oi}">${esc(o.t.zh||o.slug)}</option>`).join("")}</optgroup>`:""}
+              <option value="del">刪除照片</option>
+            </select>
+          </div>
+        </div>`).join("")}
+      </div>
+      <label class="drop" data-drop="${si}">把照片拖到這裡，或點擊選擇（可多選，JPG / PNG）<input type="file" accept="image/*" multiple hidden data-up="${si}" id="up-${si}"></label>
+    </div>`).join("") + `
+    <div class="panel">
+      <div class="hd"><span class="nm">新增地區</span></div>
+      <div class="fields">
+        <label>中文名<input id="n-zh" placeholder="例如 倫敦"></label>
+        <label>English<input id="n-en" placeholder="London"></label>
+        <label>日本語<input id="n-ja" placeholder="ロンドン"></label>
+        <label>&nbsp;<button class="btn" id="n-add" type="button">新增</button></label>
+      </div>
+    </div>`;
+
+  body.querySelectorAll(".panel[data-si]").forEach(pn=>{
+    const si=+pn.dataset.si, s=D.series[si];
+    pn.querySelectorAll("[data-f]").forEach(inp=>inp.addEventListener("input",()=>{ s.t[inp.dataset.f]=inp.value; markDirty(); }));
+    pn.querySelectorAll(".hd [data-a]").forEach(b=>b.onclick=()=>{
+      const a=b.dataset.a;
+      if(a==="sup"){ [D.series[si-1],D.series[si]]=[D.series[si],D.series[si-1]]; }
+      if(a==="sdown"){ [D.series[si+1],D.series[si]]=[D.series[si],D.series[si+1]]; }
+      if(a==="sdel"){ if(armed!=="s"+si){ armed="s"+si; renderAdmin(); return; } D.series.splice(si,1); }
+      armed=null; markDirty(); renderAdmin();
+    });
+    pn.querySelectorAll(".pc").forEach(c=>{
+      const pi=+c.dataset.pi;
+      c.querySelectorAll("button[data-a]").forEach(b=>b.onclick=()=>{
+        const d=b.dataset.a==="pl"?-1:1; const j=pi+d; [s.imgs[j],s.imgs[pi]]=[s.imgs[pi],s.imgs[j]]; markDirty(); renderAdmin(); });
+      c.querySelector("select").onchange=e=>{
+        const v=e.target.value, m=s.imgs[pi]; if(!v) return;
+        if(v==="cover") s.cover=m.src;
+        else if(["enter","lead","portrait"].includes(v)) D[v]={src:m.src,t:m.t,r:m.r};
+        else if(v.startsWith("mv")){ const o=D.series[+v.slice(2)]; s.imgs.splice(pi,1); o.imgs.push(m); if(s.cover===m.src) s.cover=s.imgs[0]?s.imgs[0].src:""; }
+        else if(v==="del"){ s.imgs.splice(pi,1); if(s.cover===m.src) s.cover=s.imgs[0]?s.imgs[0].src:""; }
+        markDirty(); renderAdmin();
+      };
+    });
+    const inp=pn.querySelector("[data-up]"), drop=pn.querySelector("[data-drop]");
+    inp.onchange=()=>addFiles(si,[...inp.files]);
+    drop.addEventListener("dragover",e=>{e.preventDefault();drop.classList.add("over")});
+    drop.addEventListener("dragleave",()=>drop.classList.remove("over"));
+    drop.addEventListener("drop",e=>{e.preventDefault();drop.classList.remove("over");addFiles(si,[...e.dataTransfer.files].filter(f=>f.type.startsWith("image/")||/\.(heic|jpe?g|png|webp)$/i.test(f.name)))});
+  });
+  $("n-add").onclick=()=>{
+    const zh=$("n-zh").value.trim(), en=$("n-en").value.trim(), ja=$("n-ja").value.trim();
+    if(!zh&&!en){ $("n-zh").focus(); return; }
+    let slug=(en||"r").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"r";
+    while(D.series.some(x=>x.slug===slug)) slug+="-2";
+    D.series.push({slug,t:{zh:zh||en,en:en||zh,ja:ja||zh||en},cover:"",imgs:[]});
+    markDirty(); renderAdmin();
+  };
+}
+
+async function toJpeg(file,maxEdge,q){
+  let bmp;
+  try{ bmp=await createImageBitmap(file,{imageOrientation:"from-image"}); }
+  catch(e){ const url=URL.createObjectURL(file); bmp=await new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=rej;im.src=url;}); }
+  const w=bmp.width||bmp.naturalWidth, h=bmp.height||bmp.naturalHeight, k=Math.min(1,maxEdge/Math.max(w,h));
+  const c=document.createElement("canvas"); c.width=Math.round(w*k); c.height=Math.round(h*k);
+  c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+  const blob=await new Promise(r=>c.toBlob(r,"image/jpeg",q));
+  return {blob,w:c.width,h:c.height};
+}
+async function addFiles(si,files){
+  if(!files.length) return;
+  const s=draft.series[si]; let ok=0, bad=[];
+  $("savebar").hidden=false; $("save-msg").className="msg"; $("save-msg").textContent=`正在處理 ${files.length} 張照片…`;
+  for(const f of files){
+    try{
+      const big=await toJpeg(f,2000,.86), th=await toJpeg(f,240,.72);
+      const id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+      const p=`img/u_${id}.jpg`, pt=`img/t_u_${id}.jpg`;
+      NEWFILES[p]=big.blob; NEWFILES[pt]=th.blob;
+      BLOB[p]=URL.createObjectURL(big.blob); BLOB[pt]=URL.createObjectURL(th.blob);
+      s.imgs.push({src:p,t:pt,r:big.h>big.w*1.05?"v":"h"}); if(!s.cover) s.cover=p; ok++;
+    }catch(e){ bad.push(f.name); }
+  }
+  markDirty(); renderAdmin();
+  if(bad.length){ $("save-msg").className="msg warn"; $("save-msg").textContent=`已加入 ${ok} 張；${bad.length} 張無法讀取（${bad.slice(0,3).join("、")}）。HEIC 請先在「照片」App 匯出為 JPG。`; }
+}
+
+$("discard").onclick=()=>{ draft=null; dirty=false; armed=null; for(const k in NEWFILES) delete NEWFILES[k]; $("savebar").hidden=true; renderAdmin(); };
+$("publish").onclick=async()=>{
+  if(saving||!draft) return;
+  if(!artifactNS){ $("save-msg").className="msg warn"; $("save-msg").textContent="這個視圖不能保存。請在 Claude 裡用你自己的帳號打開網站。"; return; }
+  saving=true; $("publish").setAttribute("disabled",""); $("save-msg").className="msg"; $("save-msg").textContent="正在發布…";
+  const refs=allRefs(draft), files={"data/site.json":JSON.stringify(draft)};
+  for(const [p,b] of Object.entries(NEWFILES)) if(refs.has(p)) files[p]=b;
+  allRefs(SITE).forEach(p=>{ if(!refs.has(p) && !NEWFILES[p]) files[p]=null; });
+  try{
+    await artifactNS.publish(files);
+    SITE=clone(draft); for(const k in NEWFILES) delete NEWFILES[k];
+    dirty=false; $("save-msg").textContent="已發布，網站已更新。"; setTimeout(()=>{ if(!dirty) $("savebar").hidden=true; },2500);
+    renderStatic();
+  }catch(e){
+    const c=e&&e.code;
+    $("save-msg").className="msg warn";
+    $("save-msg").textContent = c==="conflict" ? "網站在別處被更新過，頁面將重新載入，這次的更改沒有保存。"
+      : c==="too_large" ? "文件太大，請少選幾張再發布。"
+      : c==="rate_limited" ? "發布太頻繁，請稍等一分鐘再試。"
+      : (c==="capability_disabled"||c==="not_writer"||c==="not_granted") ? "這個視圖不能保存（例如通過公開鏈接打開）。請在 Claude 裡用你自己的帳號打開。"
+      : "發布失敗，請再試一次。";
+  }finally{ saving=false; $("publish").removeAttribute("disabled"); }
+};
+addEventListener("beforeunload",e=>{ if(dirty){ e.preventDefault(); e.returnValue=""; } });
+
+/* ---------- boot ---------- */
+(async function init(){
+  let s=null; try{s=localStorage.getItem("yl-lang")}catch(e){}
+  if(!s){const n=(navigator.language||"").toLowerCase(); s=n.startsWith("zh")?"zh":n.startsWith("ja")?"ja":"en";}
+  L=["zh","en","ja"].includes(s)?s:"zh";
+  try{ const r=await fetch("data/site.json",{cache:"no-cache"}); if(r.ok) SITE=normalize(await r.json()); }catch(e){}
+  renderStatic(); route();
+  try{
+    const user = await window.claude?.use?.("user");
+    canEdit = user ? !!(await user.canEdit()) : false;
+    if(canEdit) artifactNS = await window.claude.use("artifact");
+  }catch(e){ canEdit=false; }
+  $("adm-link").hidden=!canEdit;
+  if(view==="admin") renderAdmin();
+})();
+</script>
+
+</body>
+</html>

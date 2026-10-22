@@ -1,0 +1,119 @@
+{
+ "enter": "img/cq_18.jpg",
+ "lead": "img/cq_28.jpg",
+ "portrait": "img/hongkong_13.jpg",
+ "series": [
+  {
+   "slug": "chongqing",
+   "t": {
+    "zh": "重慶",
+    "en": "Chongqing",
+    "ja": "重慶"
+   },
+   "cover": "img/cq_17.jpg",
+   "imgs": [
+    "img/cq_01.jpg",
+    "img/cq_02.jpg",
+    "img/cq_03.jpg",
+    "img/cq_04.jpg",
+    "img/cq_05.jpg",
+    "img/cq_06.jpg",
+    "img/cq_07.jpg",
+    "img/cq_08.jpg",
+    "img/cq_09.jpg",
+    "img/cq_10.jpg",
+    "img/cq_11.jpg",
+    "img/cq_12.jpg",
+    "img/cq_13.jpg",
+    "img/cq_14.jpg",
+    "img/cq_15.jpg",
+    "img/cq_16.jpg",
+    "img/cq_17.jpg",
+    "img/cq_18.jpg",
+    "img/cq_19.jpg",
+    "img/cq_20.jpg",
+    "img/cq_21.jpg",
+    "img/cq_22.jpg",
+    "img/cq_23.jpg",
+    "img/cq_24.jpg",
+    "img/cq_25.jpg",
+    "img/cq_26.jpg",
+    "img/cq_27.jpg",
+    "img/cq_28.jpg",
+    "img/cq_31.jpg",
+    "img/cq_34.jpg",
+    "img/cq_35.jpg"
+   ]
+  },
+  {
+   "slug": "hongkong",
+   "t": {
+    "zh": "香港",
+    "en": "Hong Kong",
+    "ja": "香港"
+   },
+   "cover": "img/hongkong_06.jpg",
+   "imgs": [
+    "img/hongkong_01.jpg",
+    "img/hongkong_02.jpg",
+    "img/hongkong_03.jpg",
+    "img/hongkong_04.jpg",
+    "img/hongkong_05.jpg",
+    "img/hongkong_06.jpg",
+    "img/hongkong_07.jpg",
+    "img/hongkong_08.jpg",
+    "img/hongkong_09.jpg",
+    "img/hongkong_10.jpg",
+    "img/hongkong_11.jpg",
+    "img/hongkong_12.jpg",
+    "img/hongkong_14.jpg",
+    "img/hongkong_15.jpg",
+    "img/hongkong_16.jpg"
+   ]
+  },
+  {
+   "slug": "newyork",
+   "t": {
+    "zh": "紐約",
+    "en": "New York",
+    "ja": "ニューヨーク"
+   },
+   "cover": "img/newyork_07.jpg",
+   "imgs": [
+    "img/newyork_01.jpg",
+    "img/newyork_02.jpg",
+    "img/newyork_03.jpg",
+    "img/newyork_04.jpg",
+    "img/newyork_05.jpg",
+    "img/newyork_06.jpg",
+    "img/newyork_07.jpg",
+    "img/newyork_08.jpg",
+    "img/newyork_09.jpg",
+    "img/newyork_10.jpg",
+    "img/newyork_11.jpg",
+    "img/newyork_12.jpg"
+   ]
+  },
+  {
+   "slug": "tokyo",
+   "t": {
+    "zh": "東京",
+    "en": "Tokyo",
+    "ja": "東京"
+   },
+   "cover": "img/tokyo_03.jpg",
+   "imgs": [
+    "img/tokyo_01.jpg",
+    "img/tokyo_02.jpg",
+    "img/tokyo_03.jpg",
+    "img/tokyo_04.jpg",
+    "img/tokyo_05.jpg",
+    "img/tokyo_06.jpg",
+    "img/tokyo_07.jpg",
+    "img/tokyo_08.jpg",
+    "img/tokyo_09.jpg",
+    "img/tokyo_10.jpg"
+   ]
+  }
+ ]
+}

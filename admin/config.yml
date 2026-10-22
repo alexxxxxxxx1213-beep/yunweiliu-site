@@ -1,0 +1,56 @@
+# 後台設定（Sveltia CMS）
+# GitHub 倉庫：alexxxxxxxx1213-beep/yunweiliu-site
+backend:
+  name: github
+  repo: alexxxxxxxx1213-beep/yunweiliu-site
+  branch: main
+
+site_url: https://yunweiliu.com
+display_url: https://yunweiliu.com
+locale: zh_Hant
+
+media_folder: img/uploads
+public_folder: /img/uploads
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 30000000
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2400
+          height: 2400
+
+collections:
+  - name: site
+    label: 網站內容
+    files:
+      - name: works
+        label: 作品與地區
+        file: data/site.json
+        format: json
+        fields:
+          - { name: enter, label: 入口大圖（打開網站第一眼看到的）, widget: image }
+          - { name: lead, label: 作品頁主圖（壓在 YUNWEI 上的那張）, widget: image }
+          - { name: portrait, label: 關於頁照片, widget: image }
+          - name: series
+            label: 地區
+            label_singular: 地區
+            widget: list
+            summary: "{{fields.t.zh}} / {{fields.t.en}}"
+            fields:
+              - name: slug
+                label: 網址代號（英文小寫，例如 london）
+                widget: string
+                pattern: ['^[a-z0-9-]+$', '只能用英文小寫字母、數字和連字號']
+              - name: t
+                label: 地區名稱
+                widget: object
+                fields:
+                  - { name: zh, label: 中文, widget: string }
+                  - { name: en, label: English, widget: string }
+                  - { name: ja, label: 日本語, widget: string }
+              - { name: cover, label: 封面照片, widget: image, required: false }
+              - { name: imgs, label: 照片（可多選上傳，可拖動排序）, widget: image, multiple: true }
