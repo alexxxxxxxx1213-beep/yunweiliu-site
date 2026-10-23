@@ -145,18 +145,18 @@ img.photo{display:block;width:100%;height:auto;max-width:100%}
 .about .bio{max-width:34em;font-size:14px}
 .about .bio p{margin:0 0 14px}
 @media (max-width:760px){.about{grid-template-columns:1fr}.about figure{justify-self:start}}
-.ac{border-top:1px solid var(--line);padding-inline:14px;background-color:transparent;transition:background-color .55s ease}
+.ac{border-top:1px solid var(--line);padding-inline:14px;background-color:transparent;transition:background-color .65s ease}
 .ac:last-child{border-bottom:1px solid var(--line)}
 .ac.open{background-color:#0e0e0e}
 .ac-h{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;justify-content:space-between;align-items:center;padding-block:18px;font-size:clamp(16px,1.9vw,22px)}
 .ac-h.wide{font-family:var(--f-wide);font-stretch:125%;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
 .ac-h:focus-visible{outline:1px solid var(--fg);outline-offset:-1px}
-.ac-h::after{content:"+";font-family:var(--f);font-weight:300;font-size:26px;line-height:1;transition:transform .55s cubic-bezier(.22,.7,.2,1)}
+.ac-h::after{content:"+";font-family:var(--f);font-weight:300;font-size:26px;line-height:1;transition:transform .6s cubic-bezier(.45,0,.25,1)}
 .ac.open .ac-h::after{transform:rotate(45deg)}
-.ac-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.22,.7,.2,1)}
-.ac.open .ac-b{grid-template-rows:1fr}
-.ac-b > .acc{min-height:0;overflow:hidden;opacity:0;transform:translateY(-6px);transition:opacity .35s ease,transform .55s cubic-bezier(.22,.7,.2,1)}
-.ac.open .ac-b > .acc{opacity:1;transform:none;transition-delay:.08s}
+.ac-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .65s cubic-bezier(.45,0,.25,1)}
+.ac.open .ac-b{grid-template-rows:1fr;transition:grid-template-rows .6s cubic-bezier(.22,.7,.2,1)}
+.ac-b > .acc{min-height:0;overflow:hidden;opacity:0;transform:translateY(-4px);transition:opacity .45s ease,transform .65s cubic-bezier(.45,0,.25,1)}
+.ac.open .ac-b > .acc{opacity:1;transform:none;transition:opacity .45s ease .1s,transform .6s cubic-bezier(.22,.7,.2,1)}
 @media (prefers-reduced-motion:reduce){.ac,.ac-h::after,.ac-b,.ac-b > .acc{transition:none}}
 .acc{padding-bottom:26px;display:grid;gap:14px;max-width:760px}
 .row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:16px;font-size:14px}
@@ -412,7 +412,7 @@ function renderStatic(){
     return `<div class="item"><a href="#${esc(s.slug)}">${c?`<img class="cover" src="${esc(u(c))}" alt="${esc(tx(s.t))}" loading="lazy">`:`<span class="ph"></span>`}<span class="t">${esc(tx(s.t))}</span></a></div>`;
   }).join("");
 
-  $("acc").innerHTML = ACC.map((a,i)=>`<div class="ac${i===0?" open":""}"><button class="ac-h wide" type="button" aria-expanded="${i===0}" id="ach-${i}">${tx(T[a.k])}</button><div class="ac-b"><div class="acc">${
+  $("acc").innerHTML = ACC.map((a,i)=>`<div class="ac"><button class="ac-h wide" type="button" aria-expanded="false" id="ach-${i}">${tx(T[a.k])}</button><div class="ac-b"><div class="acc">${
     a.rows.map(r=>`<div class="row"><span class="y">${tx(r.y)}</span><div><b>${tx(r.b)}</b>${r.s?`<div style="color:var(--dim)">${tx(r.s)}</div>`:""}${r.li?`<ul>${r.li.map(x=>`<li>${tx(x)}</li>`).join("")}</ul>`:""}</div></div>`).join("")
   }</div></div></div>`).join("");
   $("acc").querySelectorAll(".ac").forEach(d=>{
