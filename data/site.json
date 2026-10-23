@@ -403,8 +403,33 @@
     "en": "London",
     "ja": "ロンドン"
    },
-   "cover": "",
-   "imgs": [],
+   "cover": "/img/uploads/london_01.jpg",
+   "imgs": [
+    {
+     "src": "/img/uploads/london_01.jpg",
+     "cap": {
+      "zh": "遊行隊伍中揮舞的旗幟",
+      "en": "Flags raised in a march",
+      "ja": "デモ行進ではためく旗"
+     }
+    },
+    {
+     "src": "/img/uploads/london_02.jpg",
+     "cap": {
+      "zh": "逆光中舉著標語行進的人",
+      "en": "Marchers with placards against the light",
+      "ja": "逆光の中、プラカードを掲げて歩く人々"
+     }
+    },
+    {
+     "src": "/img/uploads/london_03.jpg",
+     "cap": {
+      "zh": "旗幟下的倫敦警察",
+      "en": "A Met Police officer beneath a flag",
+      "ja": "旗の下のロンドン警察官"
+     }
+    }
+   ],
    "note": "To be continued"
   }
  ]

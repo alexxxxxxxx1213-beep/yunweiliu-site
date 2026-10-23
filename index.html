@@ -103,6 +103,17 @@ img.photo{display:block;width:100%;height:auto;max-width:100%}
 @media (prefers-reduced-motion:reduce){#zstage img,#zoom{transition:none}}
 .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .7s ease,transform .8s cubic-bezier(.22,.7,.2,1)}
 .stage img.on{opacity:1}
+.endcard{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:10px;text-align:center;pointer-events:none;opacity:0;transition:opacity .9s ease .25s}
+.endcard.on{opacity:1}
+.endcard b{font-family:var(--f-wide);font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:clamp(18px,3vw,30px);letter-spacing:.02em;color:var(--fg)}
+.endcard span{font-size:12px;color:var(--dim);letter-spacing:.08em}
+.endcard i{font-style:normal;display:inline-block;animation:blink 1.6s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.endcard i{animation:none}}
+.idx .cw{position:relative;display:block}
+.idx .cw .cover{filter:brightness(.42) grayscale(.35);transition:filter .6s ease}
+.idx a:hover .cw .cover{filter:brightness(.6) grayscale(.1)}
+.idx .cw .tbc{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;letter-spacing:.12em;color:var(--fg)}
 @media (prefers-reduced-motion:reduce){.stage img{transition:none}}
 .slide .nav{all:unset;position:absolute;top:calc(min(58vh,54vw) / 2 - 30px);cursor:pointer;padding:18px;font-size:24px;color:var(--dim);z-index:2}
 .slide .nav:hover{color:var(--fg)}
@@ -232,7 +243,7 @@ footer .adm{color:var(--dim);text-decoration:underline;text-underline-offset:3px
     <h1 id="s-title"></h1>
     <div class="meta" id="s-meta"></div>
     <div class="slide">
-      <div class="stage" id="stage" tabindex="0" role="button" aria-label="Enlarge"><img id="la" alt=""><img id="lb" alt=""></div>
+      <div class="stage" id="stage" tabindex="0" role="button" aria-label="Enlarge"><img id="la" alt=""><img id="lb" alt=""><div class="endcard" id="endcard" aria-live="polite"><b>To be continued<i>…</i></b><span id="endsub"></span></div></div>
       <button class="nav prev" type="button" aria-label="Previous" id="prev">‹</button>
       <button class="nav next" type="button" aria-label="Next" id="next">›</button>
       <div class="cap" id="cap"></div>
@@ -371,6 +382,7 @@ function renderStatic(){
   $("idx").innerHTML = SITE.series.map(s=>{
     const c = s.cover || (s.imgs[0]&&s.imgs[0].src) || "";
     if(!s.imgs.length) return `<div class="item"><div class="soon">${esc(s.note||"To be continued")}</div><span class="t">${esc(tx(s.t))}</span></div>`;
+    if(s.note) return `<div class="item"><a href="#${esc(s.slug)}"><span class="cw"><img class="cover" src="${esc(u(c))}" alt="${esc(tx(s.t))}" loading="lazy"><span class="tbc">${esc(s.note)}</span></span><span class="t">${esc(tx(s.t))}</span></a></div>`;
     return `<div class="item"><a href="#${esc(s.slug)}">${c?`<img class="cover" src="${esc(u(c))}" alt="${esc(tx(s.t))}" loading="lazy">`:`<span class="ph"></span>`}<span class="t">${esc(tx(s.t))}</span></a></div>`;
   }).join("");
 
@@ -389,6 +401,7 @@ function renderStatic(){
 /* ---------- region slideshow with crossfade ---------- */
 function makeSlider(stageId,aId,bId){
   const st={front:aId,token:0};
+  st.hide=()=>{ st.token++; [aId,bId].forEach(id=>$(id).classList.remove("on")); };
   st.reset=()=>{ [aId,bId].forEach(id=>{const e=$(id); e.className=""; e.style.transform=""; e.removeAttribute("src");}); };
   st.set=(src,alt,dir)=>{
     const my=++st.token, back=st.front===aId?bId:aId, nb=$(back), nf=$(st.front);
@@ -408,16 +421,27 @@ const mainS=makeSlider("stage","la","lb"), zoomS=makeSlider("zstage","za","zb");
 function openSeries(s,start=0,keep=false){
   cur=s; idx=clamp(start,0,Math.max(0,s.imgs.length-1));
   $("s-title").textContent=tx(s.t);
-  $("s-meta").textContent=`${s.imgs.length} ${tx(T.photos)}`;
+  $("s-meta").textContent=`${s.imgs.length} ${tx(T.photos)}`+(s.note?` · ${s.note}`:"");
+  atEnd=false; $("endcard").classList.remove("on"); $("endsub").textContent=`${tx(s.t)} · ${s.imgs.length} / …`;
   $("thumbs").innerHTML=s.imgs.map((m,i)=>`<button type="button" data-t="${i}" aria-label="${i+1}"><img src="${esc(u(m.t||m.src))}" data-f="${esc(u(m.src))}" onerror="this.onerror=null;this.src=this.dataset.f" alt="" loading="lazy"></button>`).join("");
-  $("thumbs").querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>show(+b.dataset.t));
+  $("thumbs").querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>show(+b.dataset.t,false,false));
   if(!keep) mainS.reset();
   show(idx,true);
 }
-function show(i,instant){
+let atEnd=false;
+function setEnd(on){
+  atEnd=on; $("endcard").classList.toggle("on",on);
+  if(on){ mainS.hide(); $("cnt").textContent="— / "+cur.imgs.length;
+    $("thumbs").querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-current","false"));
+    const el=$("cap"); clearTimeout(el._t); el.classList.add("out"); el._t=setTimeout(()=>{el.textContent="";},220); }
+}
+function show(i,instant,nav=true){
   if(!cur||!cur.imgs.length){ $("cnt").textContent=""; return; }
-  const dir = instant ? 0 : (Math.sign(i-idx)||1);
-  idx=(i+cur.imgs.length)%cur.imgs.length;
+  const n=cur.imgs.length;
+  let dir = instant ? 0 : (Math.sign(i-idx)||1);
+  if(atEnd){ setEnd(false); if(nav){ if(i>=n){ i=0; dir=1; } else { i=n-1; dir=-1; } } }
+  else if(cur.note && nav && !instant && zoom.hidden && i===n){ setEnd(true); return; }
+  idx=(i+n)%n;
   const m=cur.imgs[idx], alt=`${tx(cur.t)} ${idx+1}`, label=`${idx+1} / ${cur.imgs.length}`;
   $("cnt").textContent=label; $("zcnt").textContent=label;
   const capTxt=tx(m.cap)||"";
@@ -437,7 +461,7 @@ $("prev").onclick=()=>show(idx-1); $("next").onclick=()=>show(idx+1);
   st.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openZoom(); } });
 })();
 function openZoom(){
-  if(!cur||!cur.imgs.length) return;
+  if(!cur||!cur.imgs.length||atEnd) return;
   zoomS.reset(); zoom.hidden=false; document.documentElement.style.overflow="hidden";
   zoomS.set(u(cur.imgs[idx].src),`${tx(cur.t)} ${idx+1}`,0);
   requestAnimationFrame(()=>requestAnimationFrame(()=>zoom.classList.add("open"))); $("zclose").focus();
