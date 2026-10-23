@@ -153,10 +153,10 @@ img.photo{display:block;width:100%;height:auto;max-width:100%}
 .ac-h:focus-visible{outline:1px solid var(--fg);outline-offset:-1px}
 .ac-h::after{content:"+";font-family:var(--f);font-weight:300;font-size:26px;line-height:1;transition:transform .6s cubic-bezier(.45,0,.25,1)}
 .ac.open .ac-h::after{transform:rotate(45deg)}
-.ac-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .65s cubic-bezier(.45,0,.25,1)}
-.ac.open .ac-b{grid-template-rows:1fr;transition:grid-template-rows .6s cubic-bezier(.22,.7,.2,1)}
-.ac-b > .acc{min-height:0;overflow:hidden;opacity:0;transform:translateY(-4px);transition:opacity .45s ease,transform .65s cubic-bezier(.45,0,.25,1)}
-.ac.open .ac-b > .acc{opacity:1;transform:none;transition:opacity .45s ease .1s,transform .6s cubic-bezier(.22,.7,.2,1)}
+.ac-b{height:0;overflow:hidden}
+.ac.open .ac-b{height:auto}
+.ac.closing{background-color:transparent}
+.ac.closing .ac-h::after{transform:none}
 @media (prefers-reduced-motion:reduce){.ac,.ac-h::after,.ac-b,.ac-b > .acc{transition:none}}
 .acc{padding-bottom:26px;display:grid;gap:14px;max-width:760px}
 .row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:16px;font-size:14px}
@@ -416,8 +416,26 @@ function renderStatic(){
     a.rows.map(r=>`<div class="row"><span class="y">${tx(r.y)}</span><div><b>${tx(r.b)}</b>${r.s?`<div style="color:var(--dim)">${tx(r.s)}</div>`:""}${r.li?`<ul>${r.li.map(x=>`<li>${tx(x)}</li>`).join("")}</ul>`:""}</div></div>`).join("")
   }</div></div></div>`).join("");
   $("acc").querySelectorAll(".ac").forEach(d=>{
-    const btn=d.querySelector(".ac-h");
-    btn.addEventListener("click",()=>{ const on=!d.classList.contains("open"); d.classList.toggle("open",on); btn.setAttribute("aria-expanded",on); });
+    const btn=d.querySelector(".ac-h"), box=d.querySelector(".ac-b"), inner=box.firstElementChild;
+    btn.addEventListener("click",()=>{
+      const opening=!d.classList.contains("open")||d.classList.contains("closing");
+      btn.setAttribute("aria-expanded",opening);
+      const from=box.getBoundingClientRect().height;
+      (d._a||[]).forEach(x=>x.cancel());
+      if(RM.matches||!box.animate){ d.classList.toggle("open",opening); d.classList.remove("closing"); return; }
+      if(opening){
+        d.classList.remove("closing"); d.classList.add("open");
+        const to=inner.scrollHeight;
+        d._a=[box.animate([{height:from+"px"},{height:to+"px"}],{duration:620,easing:"cubic-bezier(.22,.7,.2,1)"}),
+              inner.animate([{opacity:from?getComputedStyle(inner).opacity:0,transform:"translateY(-6px)"},{opacity:1,transform:"none"}],{duration:520,delay:60,easing:"ease-out",fill:"backwards"})];
+        d._a[0].onfinish=()=>{ d._a=null; };
+      }else{
+        d.classList.add("closing");
+        d._a=[box.animate([{height:from+"px"},{height:"0px"}],{duration:720,easing:"cubic-bezier(.45,.05,.25,1)",fill:"forwards"}),
+              inner.animate([{opacity:1,transform:"none"},{opacity:0,transform:"translateY(-10px)"}],{duration:620,easing:"cubic-bezier(.4,0,.6,1)",fill:"forwards"})];
+        d._a[0].onfinish=()=>{ d.classList.remove("open","closing"); d._a.forEach(x=>x.cancel()); d._a=null; };
+      }
+    });
   });
 
   const ig = CONTACT.instagram;
