@@ -53,4 +53,23 @@ collections:
                   - { name: en, label: English, widget: string }
                   - { name: ja, label: 日本語, widget: string }
               - { name: cover, label: 封面照片, widget: image, required: false }
-              - { name: imgs, label: 照片（可多選上傳，可拖動排序）, widget: image, multiple: true }
+              - name: note
+                label: 尚無照片時顯示的文字（例如 To be continued）
+                widget: string
+                required: false
+              - name: imgs
+                label: 照片（可拖動排序）
+                label_singular: 照片
+                widget: list
+                required: false
+                summary: "{{fields.cap.zh}} {{fields.cap.en}}"
+                fields:
+                  - { name: src, label: 照片, widget: image }
+                  - name: cap
+                    label: 標題（越短越好）
+                    widget: object
+                    required: false
+                    fields:
+                      - { name: zh, label: 中文, widget: string, required: false }
+                      - { name: en, label: English, widget: string, required: false }
+                      - { name: ja, label: 日本語, widget: string, required: false }

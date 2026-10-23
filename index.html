@@ -92,6 +92,8 @@ img.photo{display:block;width:100%;height:auto;max-width:100%}
 #zstage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.97);transition:opacity .7s ease,transform .8s cubic-bezier(.22,.7,.2,1)}
 #zstage img.on{opacity:1}
 #zoom.open #zstage img.on{transform:none}
+#zmid{display:grid;justify-items:center;gap:2px;min-width:8em}
+#zmid .cap{margin:0;color:var(--fg)}
 #zbar{display:flex;align-items:center;gap:28px;font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
 #zbar button{all:unset;cursor:pointer;font-size:26px;line-height:1;padding:4px 12px;color:var(--dim)}
 #zbar button:hover{color:var(--fg)}
@@ -107,7 +109,13 @@ img.photo{display:block;width:100%;height:auto;max-width:100%}
 .slide .nav:focus-visible{outline:1px solid var(--fg)}
 .slide .prev{left:-58px}.slide .next{right:-58px}
 @media (max-width:1220px){.slide .prev{left:-12px}.slide .next{right:-12px}}
-.slide .cnt{text-align:center;color:var(--dim);font-size:12px;margin-top:12px;font-variant-numeric:tabular-nums}
+.slide .cnt{text-align:center;color:var(--dim);font-size:12px;margin-top:6px;font-variant-numeric:tabular-nums}
+.cap{text-align:center;font-size:14px;letter-spacing:.01em;min-height:1.5em;margin-top:18px;opacity:1;transform:none;
+  transition:opacity .6s ease .18s,transform .8s cubic-bezier(.22,.7,.2,1) .18s}
+.cap.out{opacity:0;transform:translateY(6px);transition:opacity .2s ease,transform .2s ease}
+@media (prefers-reduced-motion:reduce){.cap,.cap.out{transition:none;transform:none}}
+.idx .soon{display:grid;place-items:center;width:100%;aspect-ratio:3/2;border:1px solid var(--line);color:var(--dim);font-size:13px;letter-spacing:.12em}
+.idx .soon + .t{text-decoration:none}
 .thumbs{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:28px auto 0;max-width:1080px}
 .thumbs button{all:unset;cursor:pointer;width:64px;height:44px;opacity:.4;overflow:hidden;transition:opacity .3s}
 .thumbs button[aria-current="true"],.thumbs button:hover{opacity:1}
@@ -227,6 +235,7 @@ footer .adm{color:var(--dim);text-decoration:underline;text-underline-offset:3px
       <div class="stage" id="stage" tabindex="0" role="button" aria-label="Enlarge"><img id="la" alt=""><img id="lb" alt=""></div>
       <button class="nav prev" type="button" aria-label="Previous" id="prev">‹</button>
       <button class="nav next" type="button" aria-label="Next" id="next">›</button>
+      <div class="cap" id="cap"></div>
       <div class="cnt" id="cnt"></div>
     </div>
     <div class="thumbs" id="thumbs"></div>
@@ -259,7 +268,7 @@ footer .adm{color:var(--dim);text-decoration:underline;text-underline-offset:3px
 
 <div id="zoom" hidden role="dialog" aria-modal="true" aria-label="Photo">
   <div id="zstage"><img id="za" alt=""><img id="zb" alt=""></div>
-  <div id="zbar"><button type="button" id="zprev" aria-label="Previous">‹</button><span id="zcnt"></span><button type="button" id="znext" aria-label="Next">›</button></div>
+  <div id="zbar"><button type="button" id="zprev" aria-label="Previous">‹</button><span id="zmid"><span class="cap" id="zcap"></span><span id="zcnt"></span></span><button type="button" id="znext" aria-label="Next">›</button></div>
   <button type="button" id="zclose" aria-label="Close">×</button>
 </div>
 
@@ -334,7 +343,7 @@ function normalize(d){
   const out = {enter:one(d.enter), lead:one(d.lead), portrait:one(d.portrait), series:[]};
   (d.series||[]).forEach(s=>{
     const imgs=(s.imgs||[]).map(one).filter(m=>m&&m.src).map(m=>({...m, t: m.t || cdn(m.src,320)}));
-    out.series.push({slug:String(s.slug||"").trim()||("r"+out.series.length), t:s.t||{}, cover:(typeof s.cover==="object"&&s.cover?s.cover.src:s.cover)||"", imgs});
+    out.series.push({slug:String(s.slug||"").trim()||("r"+out.series.length), t:s.t||{}, cover:(typeof s.cover==="object"&&s.cover?s.cover.src:s.cover)||"", imgs, note:s.note||""});
   });
   return out;
 }
@@ -361,6 +370,7 @@ function renderStatic(){
 
   $("idx").innerHTML = SITE.series.map(s=>{
     const c = s.cover || (s.imgs[0]&&s.imgs[0].src) || "";
+    if(!s.imgs.length) return `<div class="item"><div class="soon">${esc(s.note||"To be continued")}</div><span class="t">${esc(tx(s.t))}</span></div>`;
     return `<div class="item"><a href="#${esc(s.slug)}">${c?`<img class="cover" src="${esc(u(c))}" alt="${esc(tx(s.t))}" loading="lazy">`:`<span class="ph"></span>`}<span class="t">${esc(tx(s.t))}</span></a></div>`;
   }).join("");
 
@@ -410,6 +420,10 @@ function show(i,instant){
   idx=(i+cur.imgs.length)%cur.imgs.length;
   const m=cur.imgs[idx], alt=`${tx(cur.t)} ${idx+1}`, label=`${idx+1} / ${cur.imgs.length}`;
   $("cnt").textContent=label; $("zcnt").textContent=label;
+  const capTxt=tx(m.cap)||"";
+  ["cap","zcap"].forEach(id=>{ const el=$(id); clearTimeout(el._t);
+    if(instant){ el.textContent=capTxt; el.classList.remove("out"); return; }
+    el.classList.add("out"); el._t=setTimeout(()=>{ el.textContent=capTxt; el.classList.remove("out"); },220); });
   $("thumbs").querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-current",+b.dataset.t===idx));
   mainS.set(u(m.src),alt,dir);
   if(!zoom.hidden) zoomS.set(u(m.src),alt,dir);

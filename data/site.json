@@ -12,48 +12,142 @@
    },
    "cover": "/img/uploads/cq_17.jpg",
    "imgs": [
-    "/img/uploads/cq_17.jpg",
-    "/img/uploads/cq_18.jpg",
-    "/img/uploads/ex_24.jpg",
-    "/img/uploads/ex_12.jpg",
-    "/img/uploads/ex_11.jpg",
-    "/img/uploads/ex_13.jpg",
-    "/img/uploads/cq_16.jpg",
-    "/img/uploads/ex_19.jpg",
-    "/img/uploads/ex_15.jpg",
-    "/img/uploads/ex_16.jpg",
-    "/img/uploads/ex_01.jpg",
-    "/img/uploads/ex_28.jpg",
-    "/img/uploads/ex_14.jpg",
-    "/img/uploads/ex_18.jpg",
-    "/img/uploads/ex_26.jpg",
-    "/img/uploads/ex_27.jpg",
-    "/img/uploads/ex_29.jpg"
-   ]
-  },
-  {
-   "slug": "hongkong",
-   "t": {
-    "zh": "香港",
-    "en": "Hong Kong",
-    "ja": "香港"
-   },
-   "cover": "/img/uploads/hongkong_06.jpg",
-   "imgs": [
-    "/img/uploads/hongkong_03.jpg",
-    "/img/uploads/hongkong_02.jpg",
-    "/img/uploads/hongkong_05.jpg",
-    "/img/uploads/hongkong_07.jpg",
-    "/img/uploads/hongkong_09.jpg",
-    "/img/uploads/hongkong_11.jpg",
-    "/img/uploads/hongkong_06.jpg",
-    "/img/uploads/hongkong_01.jpg",
-    "/img/uploads/hongkong_04.jpg",
-    "/img/uploads/hongkong_16.jpg",
-    "/img/uploads/ex_09.jpg",
-    "/img/uploads/hongkong_14.jpg",
-    "/img/uploads/hongkong_15.jpg",
-    "/img/uploads/hongkong_12.jpg"
+    {
+     "src": "/img/uploads/cq_17.jpg",
+     "cap": {
+      "zh": "岸邊",
+      "en": "On the Bank",
+      "ja": "岸辺"
+     }
+    },
+    {
+     "src": "/img/uploads/cq_18.jpg",
+     "cap": {
+      "zh": "跳",
+      "en": "Leap",
+      "ja": "跳躍"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_24.jpg",
+     "cap": {
+      "zh": "泳圈",
+      "en": "Rings",
+      "ja": "浮き輪"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_12.jpg",
+     "cap": {
+      "zh": "午休",
+      "en": "Siesta",
+      "ja": "昼休み"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_11.jpg",
+     "cap": {
+      "zh": "來電",
+      "en": "Calling",
+      "ja": "電話"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_13.jpg",
+     "cap": {
+      "zh": "欄杆後",
+      "en": "Behind Bars",
+      "ja": "柵の向こう"
+     }
+    },
+    {
+     "src": "/img/uploads/cq_16.jpg",
+     "cap": {
+      "zh": "午後",
+      "en": "Afternoon",
+      "ja": "午後"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_19.jpg",
+     "cap": {
+      "zh": "熱氣",
+      "en": "Steam",
+      "ja": "湯気"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_15.jpg",
+     "cap": {
+      "zh": "氣球",
+      "en": "Inflatables",
+      "ja": "風船"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_16.jpg",
+     "cap": {
+      "zh": "重影",
+      "en": "Double",
+      "ja": "二重"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_01.jpg",
+     "cap": {
+      "zh": "黃衫",
+      "en": "Yellow",
+      "ja": "黄色"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_28.jpg",
+     "cap": {
+      "zh": "畫室",
+      "en": "Studio",
+      "ja": "アトリエ"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_14.jpg",
+     "cap": {
+      "zh": "肉舖",
+      "en": "Butcher",
+      "ja": "肉屋"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_18.jpg",
+     "cap": {
+      "zh": "夜",
+      "en": "Night",
+      "ja": "夜"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_26.jpg",
+     "cap": {
+      "zh": "黑袋",
+      "en": "Black Bag",
+      "ja": "黒い袋"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_27.jpg",
+     "cap": {
+      "zh": "手",
+      "en": "Hands",
+      "ja": "手"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_29.jpg",
+     "cap": {
+      "zh": "皮鞋",
+      "en": "Shoes",
+      "ja": "革靴"
+     }
+    }
    ]
   },
   {
@@ -65,21 +159,126 @@
    },
    "cover": "/img/uploads/newyork_07.jpg",
    "imgs": [
-    "/img/uploads/newyork_07.jpg",
-    "/img/uploads/newyork_09.jpg",
-    "/img/uploads/newyork_01.jpg",
-    "/img/uploads/newyork_04.jpg",
-    "/img/uploads/newyork_05.jpg",
-    "/img/uploads/newyork_08.jpg",
-    "/img/uploads/ex_05.jpg",
-    "/img/uploads/newyork_06.jpg",
-    "/img/uploads/newyork_10.jpg",
-    "/img/uploads/newyork_03.jpg",
-    "/img/uploads/newyork_11.jpg",
-    "/img/uploads/newyork_12.jpg",
-    "/img/uploads/newyork_02.jpg",
-    "/img/uploads/ex_03.jpg",
-    "/img/uploads/ex_07.jpg"
+    {
+     "src": "/img/uploads/newyork_07.jpg",
+     "cap": {
+      "zh": "面具",
+      "en": "Mask",
+      "ja": "仮面"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_09.jpg",
+     "cap": {
+      "zh": "擦肩",
+      "en": "Passing",
+      "ja": "すれ違い"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_01.jpg",
+     "cap": {
+      "zh": "獨行",
+      "en": "Alone",
+      "ja": "ひとり"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_04.jpg",
+     "cap": {
+      "zh": "單車",
+      "en": "Cyclist",
+      "ja": "自転車"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_05.jpg",
+     "cap": {
+      "zh": "風衣",
+      "en": "Coat",
+      "ja": "コート"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_08.jpg",
+     "cap": {
+      "zh": "教堂",
+      "en": "Church",
+      "ja": "教会"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_05.jpg",
+     "cap": {
+      "zh": "取景",
+      "en": "Framing",
+      "ja": "構図"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_06.jpg",
+     "cap": {
+      "zh": "拐杖",
+      "en": "Cane",
+      "ja": "杖"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_10.jpg",
+     "cap": {
+      "zh": "郵差包",
+      "en": "Satchel",
+      "ja": "鞄"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_03.jpg",
+     "cap": {
+      "zh": "背包",
+      "en": "Backpack",
+      "ja": "リュック"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_11.jpg",
+     "cap": {
+      "zh": "背手",
+      "en": "Hands Behind",
+      "ja": "後ろ手"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_12.jpg",
+     "cap": {
+      "zh": "歇腳",
+      "en": "Rest",
+      "ja": "休憩"
+     }
+    },
+    {
+     "src": "/img/uploads/newyork_02.jpg",
+     "cap": {
+      "zh": "揮手",
+      "en": "Wave",
+      "ja": "手を振る"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_03.jpg",
+     "cap": {
+      "zh": "晃動",
+      "en": "Blur",
+      "ja": "ぶれ"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_07.jpg",
+     "cap": {
+      "zh": "鞦韆",
+      "en": "Swings",
+      "ja": "ブランコ"
+     }
+    }
    ]
   },
   {
@@ -91,20 +290,122 @@
    },
    "cover": "/img/uploads/tokyo_03.jpg",
    "imgs": [
-    "/img/uploads/tokyo_06.jpg",
-    "/img/uploads/tokyo_01.jpg",
-    "/img/uploads/tokyo_02.jpg",
-    "/img/uploads/tokyo_04.jpg",
-    "/img/uploads/tokyo_05.jpg",
-    "/img/uploads/tokyo_03.jpg",
-    "/img/uploads/ex_20.jpg",
-    "/img/uploads/tk_0028.jpg",
-    "/img/uploads/tk_0029.jpg",
-    "/img/uploads/tk_0015.jpg",
-    "/img/uploads/tokyo_07.jpg",
-    "/img/uploads/tokyo_08.jpg",
-    "/img/uploads/tokyo_10.jpg"
+    {
+     "src": "/img/uploads/tokyo_06.jpg",
+     "cap": {
+      "zh": "帽子",
+      "en": "Cap",
+      "ja": "帽子"
+     }
+    },
+    {
+     "src": "/img/uploads/tokyo_01.jpg",
+     "cap": {
+      "zh": "粉紅",
+      "en": "Pink",
+      "ja": "ピンク"
+     }
+    },
+    {
+     "src": "/img/uploads/tokyo_02.jpg",
+     "cap": {
+      "zh": "人潮",
+      "en": "Crowd",
+      "ja": "人波"
+     }
+    },
+    {
+     "src": "/img/uploads/tokyo_04.jpg",
+     "cap": {
+      "zh": "奔跑",
+      "en": "Dash",
+      "ja": "駆け足"
+     }
+    },
+    {
+     "src": "/img/uploads/tokyo_05.jpg",
+     "cap": {
+      "zh": "斑馬線",
+      "en": "Crossing",
+      "ja": "横断歩道"
+     }
+    },
+    {
+     "src": "/img/uploads/tokyo_03.jpg",
+     "cap": {
+      "zh": "舉起",
+      "en": "Raised",
+      "ja": "掲げる"
+     }
+    },
+    {
+     "src": "/img/uploads/ex_20.jpg",
+     "cap": {
+      "zh": "貼紙",
+      "en": "Stickers",
+      "ja": "ステッカー"
+     }
+    },
+    {
+     "src": "/img/uploads/tk_0028.jpg",
+     "cap": {
+      "zh": "澀谷",
+      "en": "Shibuya",
+      "ja": "渋谷"
+     }
+    },
+    {
+     "src": "/img/uploads/tk_0029.jpg",
+     "cap": {
+      "zh": "影子",
+      "en": "Shadows",
+      "ja": "影"
+     }
+    },
+    {
+     "src": "/img/uploads/tk_0015.jpg",
+     "cap": {
+      "zh": "匠人",
+      "en": "Craftsman",
+      "ja": "職人"
+     }
+    },
+    {
+     "src": "/img/uploads/tokyo_07.jpg",
+     "cap": {
+      "zh": "門",
+      "en": "Door",
+      "ja": "扉"
+     }
+    },
+    {
+     "src": "/img/uploads/tokyo_08.jpg",
+     "cap": {
+      "zh": "藥妝店",
+      "en": "Drugstore",
+      "ja": "ドラッグストア"
+     }
+    },
+    {
+     "src": "/img/uploads/tokyo_10.jpg",
+     "cap": {
+      "zh": "燈",
+      "en": "Lights",
+      "ja": "灯り"
+     }
+    }
    ]
+  },
+  {
+   "slug": "london",
+   "t": {
+    "zh": "倫敦",
+    "en": "London",
+    "ja": "ロンドン"
+   },
+   "cover": "",
+   "imgs": [],
+   "note": "To be continued"
   }
  ]
 }
