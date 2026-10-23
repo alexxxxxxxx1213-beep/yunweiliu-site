@@ -95,9 +95,9 @@
     {
      "src": "/img/uploads/ex_01.jpg",
      "cap": {
-      "zh": "坐成一排的黃衣工人",
-      "en": "Workers in yellow sitting in a row",
-      "ja": "一列に座る黄色い服の作業員"
+      "zh": "坐成一排的黃衣外賣員",
+      "en": "Delivery riders in yellow sitting in a row",
+      "ja": "一列に座る黄色い服の配達員"
      }
     },
     {
@@ -389,9 +389,9 @@
     {
      "src": "/img/uploads/tokyo_10.jpg",
      "cap": {
-      "zh": "夜晚亮燈的鐘錶店",
-      "en": "A watch shop lit up at night",
-      "ja": "夜に灯る時計店"
+      "zh": "夜裡亮著燈的手扶梯",
+      "en": "A lit escalator at night",
+      "ja": "夜に光るエスカレーター"
      }
     }
    ]
