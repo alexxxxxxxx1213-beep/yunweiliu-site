@@ -1,6 +1,6 @@
 {
  "enter": "/img/uploads/cq_18.jpg",
- "lead": "/img/uploads/cq_24.jpg",
+ "lead": "/img/uploads/ex_04.jpg",
  "portrait": "/img/uploads/hongkong_13.jpg",
  "series": [
   {
@@ -21,7 +21,25 @@
     "/img/uploads/cq_23.jpg",
     "/img/uploads/cq_24.jpg",
     "/img/uploads/cq_25.jpg",
-    "/img/uploads/cq_27.jpg"
+    "/img/uploads/cq_27.jpg",
+    "/img/uploads/ex_01.jpg",
+    "/img/uploads/ex_02.jpg",
+    "/img/uploads/ex_10.jpg",
+    "/img/uploads/ex_11.jpg",
+    "/img/uploads/ex_12.jpg",
+    "/img/uploads/ex_13.jpg",
+    "/img/uploads/ex_14.jpg",
+    "/img/uploads/ex_15.jpg",
+    "/img/uploads/ex_16.jpg",
+    "/img/uploads/ex_17.jpg",
+    "/img/uploads/ex_18.jpg",
+    "/img/uploads/ex_19.jpg",
+    "/img/uploads/ex_24.jpg",
+    "/img/uploads/ex_25.jpg",
+    "/img/uploads/ex_26.jpg",
+    "/img/uploads/ex_27.jpg",
+    "/img/uploads/ex_28.jpg",
+    "/img/uploads/ex_29.jpg"
    ]
   },
   {
@@ -47,7 +65,8 @@
     "/img/uploads/hongkong_12.jpg",
     "/img/uploads/hongkong_14.jpg",
     "/img/uploads/hongkong_15.jpg",
-    "/img/uploads/hongkong_16.jpg"
+    "/img/uploads/hongkong_16.jpg",
+    "/img/uploads/ex_09.jpg"
    ]
   },
   {
@@ -70,7 +89,10 @@
     "/img/uploads/newyork_09.jpg",
     "/img/uploads/newyork_10.jpg",
     "/img/uploads/newyork_11.jpg",
-    "/img/uploads/newyork_12.jpg"
+    "/img/uploads/newyork_12.jpg",
+    "/img/uploads/ex_03.jpg",
+    "/img/uploads/ex_05.jpg",
+    "/img/uploads/ex_07.jpg"
    ]
   },
   {
@@ -91,7 +113,8 @@
     "/img/uploads/tokyo_07.jpg",
     "/img/uploads/tokyo_08.jpg",
     "/img/uploads/tokyo_09.jpg",
-    "/img/uploads/tokyo_10.jpg"
+    "/img/uploads/tokyo_10.jpg",
+    "/img/uploads/ex_20.jpg"
    ]
   }
  ]
