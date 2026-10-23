@@ -145,18 +145,19 @@ img.photo{display:block;width:100%;height:auto;max-width:100%}
 .about .bio{max-width:34em;font-size:14px}
 .about .bio p{margin:0 0 14px}
 @media (max-width:760px){.about{grid-template-columns:1fr}.about figure{justify-self:start}}
-details{border-top:1px solid var(--line);position:relative;padding-inline:14px}
-details::before{content:"";position:absolute;inset:0;background:#0e0e0e;transform:scaleY(0);transform-origin:top;transition:transform .7s cubic-bezier(.22,.7,.2,1);z-index:-1}
-details[open]::before,details.opening::before{transform:scaleY(1)}
-details.closing::before{transform:scaleY(0)}
-details .acc{overflow:hidden}
-@media (prefers-reduced-motion:reduce){details::before{transition:none}}
-details:last-of-type{border-bottom:1px solid var(--line)}
-summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding-block:18px;font-size:clamp(16px,1.9vw,22px)}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-family:var(--f);font-weight:300;font-size:26px;line-height:1;transition:transform .5s cubic-bezier(.22,.7,.2,1)}
-details[open] summary::after,details.opening summary::after{transform:rotate(45deg)}
-details.closing summary::after{transform:none}
+.ac{border-top:1px solid var(--line);padding-inline:14px;background-color:transparent;transition:background-color .55s ease}
+.ac:last-child{border-bottom:1px solid var(--line)}
+.ac.open{background-color:#0e0e0e}
+.ac-h{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;justify-content:space-between;align-items:center;padding-block:18px;font-size:clamp(16px,1.9vw,22px)}
+.ac-h.wide{font-family:var(--f-wide);font-stretch:125%;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+.ac-h:focus-visible{outline:1px solid var(--fg);outline-offset:-1px}
+.ac-h::after{content:"+";font-family:var(--f);font-weight:300;font-size:26px;line-height:1;transition:transform .55s cubic-bezier(.22,.7,.2,1)}
+.ac.open .ac-h::after{transform:rotate(45deg)}
+.ac-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.22,.7,.2,1)}
+.ac.open .ac-b{grid-template-rows:1fr}
+.ac-b > .acc{min-height:0;overflow:hidden;opacity:0;transform:translateY(-6px);transition:opacity .35s ease,transform .55s cubic-bezier(.22,.7,.2,1)}
+.ac.open .ac-b > .acc{opacity:1;transform:none;transition-delay:.08s}
+@media (prefers-reduced-motion:reduce){.ac,.ac-h::after,.ac-b,.ac-b > .acc{transition:none}}
 .acc{padding-bottom:26px;display:grid;gap:14px;max-width:760px}
 .row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:16px;font-size:14px}
 .row .y{color:var(--dim);font-variant-numeric:tabular-nums}
@@ -216,10 +217,14 @@ footer .adm{color:var(--dim);text-decoration:underline;text-underline-offset:3px
 .note{color:var(--dim);font-size:13px}
 
 .view[hidden]{display:none}
-.view{transition:opacity .24s ease,transform .24s ease}
-.view.out{opacity:0;transform:translateY(-8px)}
+.view{transition:opacity .26s ease,transform .3s cubic-bezier(.4,0,.2,1)}
+.view.out{opacity:0;transform:translateX(calc(var(--dx,0) * -56px)) translateY(calc((1 - var(--dxa,0)) * -8px))}
+main.wrap{overflow-x:clip}
 .rise{animation:rise .9s cubic-bezier(.22,.7,.2,1) both;animation-delay:calc(var(--i,0) * 90ms)}
 @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.slidein{animation:slidein .8s cubic-bezier(.22,.7,.2,1) both;animation-delay:calc(var(--i,0) * 70ms)}
+@keyframes slidein{from{opacity:0;transform:translateX(calc(var(--dx,1) * 64px))}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slidein{animation:none}}
 @media (prefers-reduced-motion:reduce){.view,.view.out{transition:none;transform:none;opacity:1}.rise{animation:none}}
 footer .c a{color:var(--fg);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .3s}
 footer .c a:hover{border-color:var(--fg)}
@@ -240,7 +245,7 @@ footer .c{display:grid;gap:6px;justify-items:start}
       <span class="navbar" id="navbar" aria-hidden="true"></span>
     </nav>
     <div class="right">
-      <a class="ig" id="ig-top" href="#contact" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a class="ig" id="mail-top" href="#contact" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg></a><a class="ig" id="ig-top" href="#contact" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
       <div class="lang" role="group" aria-label="Language">
         <button id="l-zh" data-l="zh">中</button><button id="l-en" data-l="en">EN</button><button id="l-ja" data-l="ja">日</button>
       </div>
@@ -314,9 +319,9 @@ footer .c{display:grid;gap:6px;justify-items:start}
 
 <footer id="ftr">
   <div class="wrap">
-    <div class="c"><span>© 2026 Yunwei Liu</span><a id="ft-mail" href="#contact"></a></div>
+    <div class="c"><span>© 2026 Yunwei Liu</span></div>
     <div class="fm wide">Yunwei<br>Liu</div>
-    <div class="r"><a class="adm" id="adm-link" href="#admin" hidden>後台</a><a class="ig" id="ig-foot" href="#contact" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
+    <div class="r"><a class="adm" id="adm-link" href="#admin" hidden>後台</a><a class="ig" id="mail-foot" href="#contact" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg></a><a class="ig" id="ig-foot" href="#contact" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></div>
   </div>
 </footer>
 
@@ -407,31 +412,16 @@ function renderStatic(){
     return `<div class="item"><a href="#${esc(s.slug)}">${c?`<img class="cover" src="${esc(u(c))}" alt="${esc(tx(s.t))}" loading="lazy">`:`<span class="ph"></span>`}<span class="t">${esc(tx(s.t))}</span></a></div>`;
   }).join("");
 
-  $("acc").innerHTML = ACC.map((a,i)=>`<details${i===0?" open":""}><summary class="wide">${tx(T[a.k])}</summary><div class="acc">${
+  $("acc").innerHTML = ACC.map((a,i)=>`<div class="ac${i===0?" open":""}"><button class="ac-h wide" type="button" aria-expanded="${i===0}" id="ach-${i}">${tx(T[a.k])}</button><div class="ac-b"><div class="acc">${
     a.rows.map(r=>`<div class="row"><span class="y">${tx(r.y)}</span><div><b>${tx(r.b)}</b>${r.s?`<div style="color:var(--dim)">${tx(r.s)}</div>`:""}${r.li?`<ul>${r.li.map(x=>`<li>${tx(x)}</li>`).join("")}</ul>`:""}</div></div>`).join("")
-  }</div></details>`).join("");
-  $("acc").querySelectorAll("details").forEach(d=>{
-    const sum=d.querySelector("summary"), body=d.querySelector(".acc");
-    sum.addEventListener("click",e=>{
-      if(RM.matches||!body.animate) return;
-      e.preventDefault();
-      if(d._anim) d._anim.cancel();
-      if(!d.open){
-        d.classList.add("opening"); d.open=true;
-        const hgt=body.scrollHeight;
-        d._anim=body.animate([{height:"0px",opacity:0,transform:"translateY(-6px)"},{height:hgt+"px",opacity:1,transform:"none"}],{duration:620,easing:"cubic-bezier(.22,.7,.2,1)"});
-        d._anim.onfinish=()=>{ d.classList.remove("opening"); d._anim=null; };
-      } else {
-        d.classList.add("closing");
-        const hgt=body.scrollHeight;
-        d._anim=body.animate([{height:hgt+"px",opacity:1},{height:"0px",opacity:0}],{duration:420,easing:"cubic-bezier(.4,0,.2,1)"});
-        d._anim.onfinish=()=>{ d.open=false; d.classList.remove("closing"); d._anim=null; };
-      }
-    });
+  }</div></div></div>`).join("");
+  $("acc").querySelectorAll(".ac").forEach(d=>{
+    const btn=d.querySelector(".ac-h");
+    btn.addEventListener("click",()=>{ const on=!d.classList.contains("open"); d.classList.toggle("open",on); btn.setAttribute("aria-expanded",on); });
   });
 
   const ig = CONTACT.instagram;
-  { const fm=$("ft-mail"); fm.textContent=CONTACT.email; fm.href="mailto:"+CONTACT.email; }
+  ["mail-top","mail-foot"].forEach(id=>{ const a=$(id); a.href="mailto:"+CONTACT.email; a.title=CONTACT.email; });
   $("v-email").innerHTML = CONTACT.email?`<a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a>`:`<span class="todo">${tx(T.todo)}</span>`;
   $("v-ig").innerHTML = ig?`<a href="https://www.instagram.com/${esc(ig)}/" target="_blank" rel="noopener">@${esc(ig)}</a>`:`<span class="todo">${tx(T.todo)}</span>`;
   $("cp-email").hidden=!CONTACT.email; $("cp-ig").hidden=!ig;
@@ -565,20 +555,28 @@ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ratio=0;
 /* ---------- routing ---------- */
 let routeT=null, firstRoute=true;
 const RM=matchMedia("(prefers-reduced-motion: reduce)");
-const RISE={about:".about figure, .bio p, #acc details",contact:".contact > div",series:"#s-title, #s-meta, .slide, .thumbs",work:".lead, .idx .item"};
+const RISE={about:".about figure, .bio p, #acc .ac",contact:".contact > div",series:"#s-title, #s-meta, .slide, .thumbs",work:".lead, .idx .item"};
 function moveNavbar(){
   const a=document.querySelector('.top nav a[aria-current="page"]'), bar=$("navbar");
   if(!a||hdr.hidden){ bar.style.opacity=0; return; }
   const nr=a.parentElement.getBoundingClientRect(), r=a.getBoundingClientRect();
   bar.style.width=r.width+"px"; bar.style.transform=`translateX(${r.left-nr.left}px)`; bar.style.top=(r.bottom-nr.top+4)+"px"; bar.style.bottom="auto"; bar.style.opacity=1;
 }
+const ORDER={enter:-1,work:0,series:0.5,about:1,contact:2,admin:3};
+function targetView(){ const h=(location.hash||"").replace("#",""); return SITE.series.some(x=>x.slug===h)?"series":(["work","about","contact","admin"].includes(h)?h:"enter"); }
 function route(){
   const prev=document.querySelector(".view:not([hidden])");
   clearTimeout(routeT);
+  const nv=targetView(), d=Math.sign((ORDER[nv]??0)-(ORDER[view]??0));
+  const horiz = d!==0 && nv!=="series" && view!=="series" && nv!=="enter" && view!=="enter";
+  document.documentElement.style.setProperty("--dx", horiz?d:0);
+  document.documentElement.style.setProperty("--dxa", horiz?1:0);
+  slideDir = horiz?d:0;
   const go=()=>{ if(prev) prev.classList.remove("out"); doRoute(); };
-  if(prev && !firstRoute && !RM.matches){ prev.classList.add("out"); routeT=setTimeout(go,240); } else go();
+  if(prev && !firstRoute && !RM.matches){ prev.classList.add("out"); routeT=setTimeout(go,260); } else go();
   firstRoute=false;
 }
+let slideDir=0;
 function doRoute(){
   const h=(location.hash||"").replace("#","");
   if(h==="admin" && STATIC){ location.href="admin/"; return; }
@@ -597,7 +595,7 @@ function doRoute(){
   placeBrand();
   requestAnimationFrame(moveNavbar);
   if(RISE[view] && !RM.matches){
-    vEl.querySelectorAll(RISE[view]).forEach((el,i)=>{ el.classList.remove("rise"); void el.offsetWidth; el.style.setProperty("--i",Math.min(i,8)); el.classList.add("rise"); });
+    const cls=slideDir?"slidein":"rise"; vEl.querySelectorAll(RISE[view]).forEach((el,i)=>{ el.classList.remove("rise","slidein"); void el.offsetWidth; el.style.setProperty("--i",Math.min(i,8)); el.classList.add(cls); });
   }
 }
 
