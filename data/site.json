@@ -1,6 +1,6 @@
 {
  "enter": "/img/uploads/cq_18.jpg",
- "lead": "/img/uploads/cq_28.jpg",
+ "lead": "/img/uploads/cq_24.jpg",
  "portrait": "/img/uploads/hongkong_13.jpg",
  "series": [
   {
@@ -12,37 +12,16 @@
    },
    "cover": "/img/uploads/cq_17.jpg",
    "imgs": [
-    "/img/uploads/cq_01.jpg",
-    "/img/uploads/cq_02.jpg",
-    "/img/uploads/cq_03.jpg",
     "/img/uploads/cq_04.jpg",
-    "/img/uploads/cq_05.jpg",
-    "/img/uploads/cq_06.jpg",
-    "/img/uploads/cq_07.jpg",
-    "/img/uploads/cq_08.jpg",
-    "/img/uploads/cq_09.jpg",
-    "/img/uploads/cq_10.jpg",
-    "/img/uploads/cq_11.jpg",
     "/img/uploads/cq_12.jpg",
-    "/img/uploads/cq_13.jpg",
-    "/img/uploads/cq_14.jpg",
-    "/img/uploads/cq_15.jpg",
     "/img/uploads/cq_16.jpg",
     "/img/uploads/cq_17.jpg",
     "/img/uploads/cq_18.jpg",
-    "/img/uploads/cq_19.jpg",
-    "/img/uploads/cq_20.jpg",
     "/img/uploads/cq_21.jpg",
-    "/img/uploads/cq_22.jpg",
     "/img/uploads/cq_23.jpg",
     "/img/uploads/cq_24.jpg",
     "/img/uploads/cq_25.jpg",
-    "/img/uploads/cq_26.jpg",
-    "/img/uploads/cq_27.jpg",
-    "/img/uploads/cq_28.jpg",
-    "/img/uploads/cq_31.jpg",
-    "/img/uploads/cq_34.jpg",
-    "/img/uploads/cq_35.jpg"
+    "/img/uploads/cq_27.jpg"
    ]
   },
   {
